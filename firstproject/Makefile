@@ -1,14 +1,20 @@
-BINARY_NAME = file-game
-MAIN_FILE = bin/main.go
+BINARY_NAME = brain-game
+MAIN_FILE = ./internal/main.go
 
 build:
-	go build -o bin/$(BINARY_NAME) $(MAIN_FILE)
+	go build -o internal/$(BINARY_NAME) $(MAIN_FILE)
 
 run: build
-	./bin/$(BINARY_NAME)
+	./internal/$(BINARY_NAME)
 
 clean:
-	rm ./bin/$(BINARY_NAME)
+	rm ./internal/$(BINARY_NAME)
+
+lint:
+	golangci-lint run
+
+test:
+	go test ./tests/... -v
 
 install:
-	go mod tidym
+	go mod tidy

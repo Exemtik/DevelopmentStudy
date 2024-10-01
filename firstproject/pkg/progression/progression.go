@@ -10,17 +10,19 @@ import (
 	"time"
 )
 
-func PlayProgressionGame() {
+type ProgressionGame struct{}
+
+func (g *ProgressionGame) Play() {
 	fmt.Println("Welcome to the Geometric Progression Game!")
 
 	name := getUserName()
 
 	rand.Seed(time.Now().UnixNano())
-	progress := generateProgression()
+	progress := GenerateProgression()
 	missingIndex := rand.Intn(len(progress))
 
 	fmt.Println("What number is missing in the progression?")
-	showProgression(progress, missingIndex)
+	fmt.Println(ShowProgression(progress, missingIndex))
 
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Your answer: ")
@@ -35,7 +37,7 @@ func PlayProgressionGame() {
 	}
 }
 
-func generateProgression() []int {
+func GenerateProgression() []int {
 	length := rand.Intn(5) + 5
 	base := rand.Intn(5) + 2
 	start := rand.Intn(10) + 1
@@ -49,15 +51,16 @@ func generateProgression() []int {
 	return progression
 }
 
-func showProgression(prog []int, missingIndex int) {
+func ShowProgression(prog []int, missingIndex int) string {
+	result := ""
 	for i, val := range prog {
 		if i == missingIndex {
-			fmt.Print(".. ")
+			result += ".. "
 		} else {
-			fmt.Printf("%d ", val)
+			result += fmt.Sprintf("%d ", val)
 		}
 	}
-	fmt.Println()
+	return result
 }
 
 func getUserName() string {
