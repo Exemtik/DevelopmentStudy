@@ -1,9 +1,7 @@
-package main
+package app
 
 import (
 	"bufio"
-	"firstproject/pkg/lcm"
-	"firstproject/pkg/progression"
 	"fmt"
 	"log"
 	"os"
@@ -16,7 +14,7 @@ type Game interface {
 }
 
 type App struct {
-	games map[int]Game
+	Games map[int]Game
 }
 
 func (app *App) Run() {
@@ -34,7 +32,7 @@ func (app *App) Run() {
 		}
 		choice, err := strconv.Atoi(strings.TrimSpace(text))
 		if err == nil {
-			if game, ok := app.games[choice]; ok {
+			if game, ok := app.Games[choice]; ok {
 				game.Play()
 			} else if choice == 3 {
 				fmt.Println("Exiting the game. Goodbye!")
@@ -46,14 +44,4 @@ func (app *App) Run() {
 			fmt.Println("Invalid choice, please select 1, 2, or 3.")
 		}
 	}
-}
-
-func main() {
-	app := App{
-		games: map[int]Game{
-			1: &progression.ProgressionGame{},
-			2: &lcm.LCMGame{},
-		},
-	}
-	app.Run()
 }

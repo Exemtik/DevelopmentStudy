@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"firstproject/pkg/lcm"
+	"firstproject/internal/lcm"
 	"testing"
 )
 

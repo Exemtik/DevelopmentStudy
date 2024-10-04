@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"firstproject/pkg/progression"
+	"firstproject/internal/progression"
 	"testing"
 )
 
