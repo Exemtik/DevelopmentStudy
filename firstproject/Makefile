@@ -1,14 +1,14 @@
 BINARY_NAME = brain-game
-MAIN_FILE = ./internal/main.go
+MAIN_FILE = ./cmd/main.go
 
 build:
-	go build -o internal/$(BINARY_NAME) $(MAIN_FILE)
+	go build -o cmd/$(BINARY_NAME) $(MAIN_FILE)
 
 run: build
-	./internal/$(BINARY_NAME)
+	./cmd/$(BINARY_NAME)
 
 clean:
-	rm ./internal/$(BINARY_NAME)
+	rm ./cmd/$(BINARY_NAME)
 
 lint:
 	golangci-lint run
