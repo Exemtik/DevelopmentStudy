@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"firstproject/internal/lcm"
+	"github.com/Exemtik/DevelopmentStudy/firstproject/internal/lcm"
 	"testing"
 )
 

@@ -1,12 +1,15 @@
 package tests
 
 import (
-	"firstproject/internal/progression"
+	"github.com/Exemtik/DevelopmentStudy/firstproject/internal/progression"
+	"math/rand"
 	"testing"
+	"time"
 )
 
 func TestGenerateProgression(t *testing.T) {
-	prog := progression.GenerateProgression()
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	prog := progression.GenerateProgression(r)
 	if len(prog) < 5 || len(prog) > 10 {
 		t.Errorf("Expected progression length between 5 and 10, got %d", len(prog))
 	}
