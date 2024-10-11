@@ -13,38 +13,45 @@ import (
 
 type LCMGame struct{}
 
-func (g *LCMGame) Play() {
-	fmt.Println("Welcome to the Least Common Multiple Game!")
+func (g *LCMGame) Play(name string) {
+	fmt.Printf("Welcome to the Geometric Progression Game, %s!\n", name)
 
-	rand.Seed(time.Now().UnixNano())
-	nums := generateNumbers()
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-	fmt.Printf("Find the least common multiple of: %d, %d, %d\n", nums[0], nums[1], nums[2])
+	const rounds = 3
+	for i := 0; i < rounds; i++ {
+		nums := generateNumbers(r)
+		fmt.Printf("Round %d: Find the least common multiple of: %d, %d, %d\n", i+1, nums[0], nums[1], nums[2])
 
-	userInput := bufio.NewReader(os.Stdin)
-	text, err := userInput.ReadString('\n')
-	if err != nil {
-		log.Fatal(err)
-	}
-	answer, err := strconv.Atoi(strings.TrimSpace(text))
-	if err != nil {
-		fmt.Println("Please enter a valid answer.")
-	} else {
+		userInput := bufio.NewReader(os.Stdin)
+		text, err := userInput.ReadString('\n')
+		if err != nil {
+			log.Fatal(err)
+		}
+		answer, err := strconv.Atoi(strings.TrimSpace(text))
+		if err != nil {
+			fmt.Println("Please enter a valid answer.")
+			return
+		}
+
 		correctAnswer := FindLCM(nums[0], nums[1], nums[2])
 
-		if answer == correctAnswer {
-			fmt.Println("Correct!")
+		if answer != correctAnswer {
+			fmt.Printf("'%d' is wrong answer ;(. Correct answer was '%d'.\n\n", answer, correctAnswer)
+			return
 		} else {
-			fmt.Printf("Wrong! The correct answer was %d.\n", correctAnswer)
+			fmt.Println("Correct!")
 		}
 	}
+	// Congratulate if all answers are correct
+	fmt.Printf("Congratulations, %s! You've successfully completed the LCM game.\n", name)
 }
 
-func generateNumbers() []int {
+func generateNumbers(r *rand.Rand) []int {
 	return []int{
-		rand.Intn(50) + 1,
-		rand.Intn(50) + 1,
-		rand.Intn(50) + 1,
+		r.Intn(10) + 1,
+		r.Intn(10) + 1,
+		r.Intn(10) + 1,
 	}
 }
 

@@ -12,35 +12,39 @@ import (
 
 type ProgressionGame struct{}
 
-func (g *ProgressionGame) Play() {
-	fmt.Println("Welcome to the Geometric Progression Game!")
+func (g *ProgressionGame) Play(name string) {
+	fmt.Printf("Welcome to the Geometric Progression Game, %s!\n", name)
 
-	name := getUserName()
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-	rand.Seed(time.Now().UnixNano())
-	progress := GenerateProgression()
-	missingIndex := rand.Intn(len(progress))
+	const rounds = 3
+	for i := 0; i < rounds; i++ {
+		progress := GenerateProgression(r)
+		missingIndex := r.Intn(len(progress))
 
-	fmt.Println("What number is missing in the progression?")
-	fmt.Println(ShowProgression(progress, missingIndex))
+		fmt.Printf("Round %d: What number is missing in the progression?\n", i+1)
+		fmt.Println(ShowProgression(progress, missingIndex))
 
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Your answer: ")
-	userInput, _ := reader.ReadString('\n')
-	userInput = strings.TrimSpace(userInput)
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("Your answer: ")
+		userInput, _ := reader.ReadString('\n')
+		userInput = strings.TrimSpace(userInput)
 
-	userAnswer, err := strconv.Atoi(userInput)
-	if err != nil || userAnswer != progress[missingIndex] {
-		fmt.Printf("'%s' is wrong answer ;(. Correct answer was '%d'. Let's try again, %s!\n", userInput, progress[missingIndex], name)
-	} else {
-		fmt.Printf("Congratulations, %s!\n", name)
+		userAnswer, err := strconv.Atoi(userInput)
+		if err != nil || userAnswer != progress[missingIndex] {
+			fmt.Printf("'%s' is wrong answer ;(. Correct answer was '%d'. Let's try again, %s!\n\n", userInput, progress[missingIndex], name)
+			return
+		} else {
+			fmt.Println("Correct!")
+		}
 	}
+	fmt.Printf("Congratulations, %s! You've successfully completed the Progression game.\n", name)
 }
 
-func GenerateProgression() []int {
-	length := rand.Intn(5) + 5
-	base := rand.Intn(5) + 2
-	start := rand.Intn(10) + 1
+func GenerateProgression(r *rand.Rand) []int {
+	length := r.Intn(5) + 5
+	base := r.Intn(5) + 2
+	start := r.Intn(10) + 1
 
 	progression := make([]int, length)
 	progression[0] = start
@@ -61,11 +65,4 @@ func ShowProgression(prog []int, missingIndex int) string {
 		}
 	}
 	return result
-}
-
-func getUserName() string {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Can you write your name? ")
-	name, _ := reader.ReadString('\n')
-	return strings.TrimSpace(name)
 }
