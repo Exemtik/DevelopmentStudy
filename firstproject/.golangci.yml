@@ -1,0 +1,8 @@
+linters:
+  enable:
+    - govet
+    - staticcheck
+    - errcheck
+run:
+  skip-dirs:
+    - node_modules
